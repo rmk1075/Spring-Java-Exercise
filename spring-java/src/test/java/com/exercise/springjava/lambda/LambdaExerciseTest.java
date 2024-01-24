@@ -57,4 +57,23 @@ public class LambdaExerciseTest {
     lambdaExercise.filterValueWithStream(
       numbers, number -> number > limit);
   }
+
+  @Test
+  void testPrints() {
+    int num1 = 1;
+    int num2 = 2;
+    lambdaExercise.prints(num1, num2);
+
+    System.out.println("--------------------");
+
+    MyFunction<Integer, Integer> func = (a, b) -> {
+      System.out.println("a: " + a + ", b: " + b);
+    };
+    func.apply(num1, num2);
+  }
+}
+
+@FunctionalInterface
+interface MyFunction<A, B> {
+  void apply(A a, B b);
 }

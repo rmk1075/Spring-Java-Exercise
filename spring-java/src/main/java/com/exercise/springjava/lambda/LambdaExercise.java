@@ -52,12 +52,13 @@ public class LambdaExercise {
     return numbers.stream().filter(predicate).toList();
   }
 
-  /**
-   * 
-   */
+  public void prints(int a, int b) {
+    System.out.println("a: " + a + ", b: " + b);
+  }
+
   public void lambdaAccessLocalVariable() {
-    int number = 1;
-    // number = 2;
+    int number = 1; // effectively final
+    // number = 2; // error
     Runnable runnable = () -> System.out.println(number);
     runnable.run();
   }
