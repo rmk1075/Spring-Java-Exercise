@@ -10,8 +10,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.exercise.springjava.jpa.entity.Item;
 import com.exercise.springjava.jpa.entity.Member;
 import com.exercise.springjava.jpa.entity.Team;
+import com.exercise.springjava.jpa.repository.ItemRepository;
 import com.exercise.springjava.jpa.repository.MemberRepository;
 import com.exercise.springjava.jpa.repository.TeamRepository;
 
@@ -20,6 +22,9 @@ public class FetchJoinExerciseTest {
 
   @Autowired
   private FetchJoinExercise fetchJoinExercise;
+
+  @Autowired
+  private ItemRepository itemRepository;
 
   @Autowired
   private MemberRepository memberRepository;
@@ -33,15 +38,21 @@ public class FetchJoinExerciseTest {
   @BeforeEach
   void setUp() throws Exception {
     Team team = teamRepository.save(new Team(TEAM_NAME_1));
-    memberRepository.saveAll(Objects.requireNonNull(List.of(
-      new Member(UUID.randomUUID().toString(), team),
-      new Member(UUID.randomUUID().toString(), team),
-      new Member(UUID.randomUUID().toString(), team),
-      new Member(UUID.randomUUID().toString(), team)
+    Member member = memberRepository.save(
+      new Member(UUID.randomUUID().toString(), team));
+    itemRepository.saveAll(Objects.requireNonNull(List.of(
+      new Item(UUID.randomUUID().toString(), member),
+      new Item(UUID.randomUUID().toString(), member),
+      new Item(UUID.randomUUID().toString(), member)
     )));
 
     team = teamRepository.save(new Team(TEAM_NAME_2));
-    memberRepository.save(new Member(UUID.randomUUID().toString(), team));
+    member = memberRepository.save(new Member(UUID.randomUUID().toString(), team));
+    itemRepository.saveAll(Objects.requireNonNull(List.of(
+      new Item(UUID.randomUUID().toString(), member),
+      new Item(UUID.randomUUID().toString(), member),
+      new Item(UUID.randomUUID().toString(), member)
+    )));
     System.out.println("-----------------------------------");
   }
 
@@ -51,6 +62,16 @@ public class FetchJoinExerciseTest {
     memberRepository.deleteAll();
     teamRepository.deleteAll();
   }
+
+	@Test
+	void testGetItemDtoList() {
+		System.out.println(fetchJoinExercise.getItemDtoList());
+	}
+
+	@Test
+	void testGetItemDtoListUsingFetchJoin() {
+		System.out.println(fetchJoinExercise.getItemDtoListUsingFetchJoin());
+	}
 
   @Test
   void testGetTeamDtoByName() {
