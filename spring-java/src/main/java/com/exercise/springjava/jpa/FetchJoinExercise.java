@@ -6,8 +6,10 @@ import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 import com.exercise.springjava.jpa.dto.ItemDto;
+import com.exercise.springjava.jpa.dto.MemberDto;
 import com.exercise.springjava.jpa.dto.TeamDto;
 import com.exercise.springjava.jpa.repository.ItemRepository;
+import com.exercise.springjava.jpa.repository.MemberRepository;
 import com.exercise.springjava.jpa.repository.TeamRepository;
 
 import jakarta.transaction.Transactional;
@@ -15,10 +17,16 @@ import jakarta.transaction.Transactional;
 @Service
 public class FetchJoinExercise {
   private TeamRepository teamRepository;
+  private MemberRepository memberRepository;
   private ItemRepository itemRepository;
 
-  public FetchJoinExercise(TeamRepository teamRepository, ItemRepository itemRepository) {
+  public FetchJoinExercise(
+    TeamRepository teamRepository,
+    MemberRepository memberRepository,
+    ItemRepository itemRepository
+  ) {
     this.teamRepository = teamRepository;
+    this.memberRepository = memberRepository;
     this.itemRepository = itemRepository;
   }
 
@@ -26,6 +34,11 @@ public class FetchJoinExercise {
   @Transactional
   public TeamDto getTeamDtoByName(@NonNull String name) {
     return teamRepository.findByName(name).map(TeamDto::new).orElseThrow(() -> new RuntimeException("Team not found"));
+  }
+
+  @Transactional
+  public List<MemberDto> getMemberDtoList() {
+    return memberRepository.findAll().stream().map(MemberDto::new).toList();
   }
 
   @Transactional
@@ -37,6 +50,11 @@ public class FetchJoinExercise {
   @Transactional
   public TeamDto getTeamDtoByNameUsingFetchJoin(@NonNull String name) {
     return teamRepository.findByNameUsingFetchJoin(name).map(TeamDto::new).orElseThrow(() -> new RuntimeException("Team not found"));
+  }
+
+  @Transactional
+  public List<MemberDto> getMemberDtoListUsingFetchJoin() {
+    return memberRepository.findAllUsingFetchJoin().stream().map(MemberDto::new).toList();
   }
 
   @Transactional

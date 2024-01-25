@@ -88,4 +88,14 @@ public class FetchJoinExerciseTest {
     System.out.println(
       fetchJoinExercise.getTeamDtoByNameUsingFetchJoin(TEAM_NAME_2));
   }
+
+  @Test
+  void testGetMemberDtoList() {
+    System.out.println(fetchJoinExercise.getMemberDtoList());
+  }
+
+  @Test
+  void testGetMemberDtoListUsingFetchJoin() {
+    System.out.println(fetchJoinExercise.getMemberDtoListUsingFetchJoin());
+  }
 }
