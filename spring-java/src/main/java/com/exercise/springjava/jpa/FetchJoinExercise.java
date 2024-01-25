@@ -48,17 +48,17 @@ public class FetchJoinExercise {
 
   // fetch join
   @Transactional
-  public TeamDto getTeamDtoByNameUsingFetchJoin(@NonNull String name) {
-    return teamRepository.findByNameUsingFetchJoin(name).map(TeamDto::new).orElseThrow(() -> new RuntimeException("Team not found"));
+  public TeamDto getTeamDtoByNameWithFetchJoin(@NonNull String name) {
+    return teamRepository.findByNameWithFetchJoin(name).map(TeamDto::new).orElseThrow(() -> new RuntimeException("Team not found"));
   }
 
   @Transactional
-  public List<MemberDto> getMemberDtoListUsingFetchJoin() {
-    return memberRepository.findAllUsingFetchJoin().stream().map(MemberDto::new).toList();
+  public List<MemberDto> getMemberDtoListWithFetchJoin() {
+    return memberRepository.findAllWithFetchJoin().stream().map(MemberDto::new).toList();
   }
 
   @Transactional
-  public List<ItemDto> getItemDtoListUsingFetchJoin() {
-    return itemRepository.findAllUsingFetchJoin().stream().map(ItemDto::new).toList();
+  public List<ItemDto> getItemDtoListWithFetchJoin() {
+    return itemRepository.findAllWithFetchJoin().stream().map(ItemDto::new).toList();
   }
 }

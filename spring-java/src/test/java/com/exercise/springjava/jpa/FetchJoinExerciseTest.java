@@ -69,8 +69,8 @@ public class FetchJoinExerciseTest {
 	}
 
 	@Test
-	void testGetItemDtoListUsingFetchJoin() {
-		System.out.println(fetchJoinExercise.getItemDtoListUsingFetchJoin());
+	void testGetItemDtoListWithFetchJoin() {
+		System.out.println(fetchJoinExercise.getItemDtoListWithFetchJoin());
 	}
 
   @Test
@@ -82,11 +82,11 @@ public class FetchJoinExerciseTest {
   }
 
   @Test
-  void testGetTeamDtoByNameUsingFetchJoin() {
+  void testGetTeamDtoByNameWithFetchJoin() {
     System.out.println(
-      fetchJoinExercise.getTeamDtoByNameUsingFetchJoin(TEAM_NAME_1));
+      fetchJoinExercise.getTeamDtoByNameWithFetchJoin(TEAM_NAME_1));
     System.out.println(
-      fetchJoinExercise.getTeamDtoByNameUsingFetchJoin(TEAM_NAME_2));
+      fetchJoinExercise.getTeamDtoByNameWithFetchJoin(TEAM_NAME_2));
   }
 
   @Test
@@ -95,7 +95,7 @@ public class FetchJoinExerciseTest {
   }
 
   @Test
-  void testGetMemberDtoListUsingFetchJoin() {
-    System.out.println(fetchJoinExercise.getMemberDtoListUsingFetchJoin());
+  void testGetMemberDtoListWithFetchJoin() {
+    System.out.println(fetchJoinExercise.getMemberDtoListWithFetchJoin());
   }
 }

@@ -13,5 +13,5 @@ public interface TeamRepository extends JpaRepository<Team, Long>{
   public Optional<Team> findByName(String name);
 
   @Query("select t from Team t join fetch t.members where t.name = :name")
-  public Optional<Team> findByNameUsingFetchJoin(String name);
+  public Optional<Team> findByNameWithFetchJoin(String name);
 }

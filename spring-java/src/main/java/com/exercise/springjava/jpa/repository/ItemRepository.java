@@ -11,5 +11,5 @@ import com.exercise.springjava.jpa.entity.Item;
 @Repository
 public interface ItemRepository extends JpaRepository<Item, Long>{
   @Query("select i from Item i join fetch i.member m join fetch m.team")
-  public List<Item> findAllUsingFetchJoin();
+  public List<Item> findAllWithFetchJoin();
 }
