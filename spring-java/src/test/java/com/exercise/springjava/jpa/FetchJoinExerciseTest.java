@@ -46,6 +46,13 @@ public class FetchJoinExerciseTest {
       new Item(UUID.randomUUID().toString(), member)
     )));
 
+    member = memberRepository.save(new Member(UUID.randomUUID().toString(), team));
+    itemRepository.saveAll(Objects.requireNonNull(List.of(
+      new Item(UUID.randomUUID().toString(), member),
+      new Item(UUID.randomUUID().toString(), member),
+      new Item(UUID.randomUUID().toString(), member)
+    )));
+
     team = teamRepository.save(new Team(TEAM_NAME_2));
     member = memberRepository.save(new Member(UUID.randomUUID().toString(), team));
     itemRepository.saveAll(Objects.requireNonNull(List.of(
@@ -96,6 +103,20 @@ public class FetchJoinExerciseTest {
 
   @Test
   void testGetMemberDtoListWithFetchJoin() {
+    System.out.println(fetchJoinExercise.getMemberDtoListWithFetchJoin());
+  }
+
+  @Test
+  void testGetMemberDtoListWithoutFetchJoin() {
+    System.out.println(fetchJoinExercise.getMemberDtoListWithoutFetchJoin());
+  }
+
+  @Test
+  void testGetMemberDtoListQueries() {
+    System.out.println(fetchJoinExercise.getMemberDtoList());
+    System.out.println();
+    System.out.println(fetchJoinExercise.getMemberDtoListWithoutFetchJoin());
+    System.out.println();
     System.out.println(fetchJoinExercise.getMemberDtoListWithFetchJoin());
   }
 }

@@ -46,6 +46,11 @@ public class FetchJoinExercise {
     return itemRepository.findAll().stream().map(ItemDto::new).toList();
   }
 
+  @Transactional
+  public List<MemberDto> getMemberDtoListWithoutFetchJoin() {
+    return memberRepository.findAllWithOutFetchJoin().stream().map(MemberDto::new).toList();
+  }
+
   // fetch join
   @Transactional
   public TeamDto getTeamDtoByNameWithFetchJoin(@NonNull String name) {
