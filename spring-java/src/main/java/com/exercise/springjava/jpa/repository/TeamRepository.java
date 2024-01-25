@@ -12,6 +12,6 @@ import com.exercise.springjava.jpa.entity.Team;
 public interface TeamRepository extends JpaRepository<Team, Long>{
   public Optional<Team> findByName(String name);
 
-  @Query("select t from Team t join fetch t.members where t.name = :name")
+  @Query("select t from Team t join fetch t.members m join fetch m.items i where t.name = :name")
   public Optional<Team> findByNameWithFetchJoin(String name);
 }
