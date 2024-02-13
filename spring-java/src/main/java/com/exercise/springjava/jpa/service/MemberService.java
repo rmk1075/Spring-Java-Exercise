@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.exercise.springjava.jpa.dto.MemberDto;
+import com.exercise.springjava.jpa.entity.Member;
 import com.exercise.springjava.jpa.repository.MemberRepository;
 
 import jakarta.transaction.Transactional;
@@ -21,6 +22,11 @@ public class MemberService {
   @Transactional
   public List<MemberDto> findAll() {
     return memberRepository.findAll().stream().map(MemberDto::new).toList();
+  }
+
+  @Transactional
+  public List<Member> findAllAsEntity() {
+    return memberRepository.findAll();
   }
 
   @Transactional
