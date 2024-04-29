@@ -9,7 +9,7 @@ import java.util.Objects;
 import java.util.TreeMap;
 import java.util.function.Predicate;
 
-public class StreamExerciseService {
+public class StreamExercise {
 
   public int sum(List<Integer> numbers) {
     return numbers.stream().mapToInt(Integer::intValue).sum();
