@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 
+
 @RestController
 @RequestMapping("/virtual-thread")
 public class VirtualThreadExerciseController {
@@ -37,10 +38,6 @@ public class VirtualThreadExerciseController {
       return new ExecutionTimeResponse(System.currentTimeMillis() - start);
     }
 
-    // Execute CPU bound task by virtual-thread
-
-    // Execute IO bound task by virtual-thread
-
     // Execute empty task by thread
     @PutMapping("/thread/empty")
     public ExecutionTimeResponse executeEmptyTaskByThread(@RequestBody ExecutionEmptyRequest request) {
@@ -49,8 +46,21 @@ public class VirtualThreadExerciseController {
       return new ExecutionTimeResponse(System.currentTimeMillis() - start);
     }
 
-    // Execute CPU bound task by thread
+    // Execute Blocking task
+    @GetMapping("/blocking")
+    public ExecutionTimeResponse executeBlockingTask() throws InterruptedException {
+      long start = System.currentTimeMillis();
+      threadService.executeBlockingTask();
+      return new ExecutionTimeResponse(System.currentTimeMillis() - start);
+    }
 
-    // Execute IO bound task by thread
+    // Execute Empty task
+    @GetMapping("/empty")
+    public ExecutionTimeResponse executeEmptyTask() {
+      long start = System.currentTimeMillis();
+      threadService.executeEmptyTask();
+      return new ExecutionTimeResponse(System.currentTimeMillis() - start);
+    }
+    
 }
 

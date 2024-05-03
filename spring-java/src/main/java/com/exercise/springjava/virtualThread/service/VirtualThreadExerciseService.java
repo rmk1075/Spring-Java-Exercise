@@ -29,4 +29,12 @@ public class VirtualThreadExerciseService {
       .toList();
     threads.forEach(Thread::start);
   }
+
+  public void executeBlockingTask() throws InterruptedException {
+    Thread.sleep(1000);
+  }
+
+  public void executeEmptyTask() {
+    for (int i = 0; i < 1000000; i++) {}
+  }
 }
