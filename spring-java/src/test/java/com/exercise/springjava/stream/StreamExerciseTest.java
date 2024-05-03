@@ -5,12 +5,12 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-public class StreamExerciseServiceTest {
+public class StreamExerciseTest {
 
-  StreamExerciseService streamExerciseService;
+  StreamExercise streamExerciseService;
 
-  public StreamExerciseServiceTest() {
-    streamExerciseService = new StreamExerciseService();
+  public StreamExerciseTest() {
+    streamExerciseService = new StreamExercise();
   }
 
   @Test

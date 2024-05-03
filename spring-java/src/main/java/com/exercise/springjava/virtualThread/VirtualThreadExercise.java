@@ -5,9 +5,11 @@ import java.util.concurrent.Executors;
 import java.util.stream.IntStream;
 
 public class VirtualThreadExercise {
+    private static int INF = 1000000;
+
     public void executeCpuBoundTasks(int num, int type) {
         System.out.println("Execute CPU bound tasks");
-        Runnable runnable = () -> IntStream.range(0, 100000000).forEach(Math::sin);
+        Runnable runnable = () -> IntStream.range(0, INF).forEach(Math::sin);
 
         System.out.println("Generate Threads");
 
@@ -23,14 +25,13 @@ public class VirtualThreadExercise {
     public void executeFakeIoBoundTasks(int num, int type) {
         System.out.println("Execute IO bound tasks");
         Runnable runnable = () -> {
-            int count = 100000000;
-            IntStream.range(0, count / 2).forEach(Math::sin);
+            IntStream.range(0, INF / 2).forEach(Math::sin);
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            IntStream.range(0, count / 2).forEach(Math::sin);
+            IntStream.range(0, INF / 2).forEach(Math::sin);
         };
 
         System.out.println("Generate Threads");
