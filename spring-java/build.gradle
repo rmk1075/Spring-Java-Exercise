@@ -32,6 +32,9 @@ dependencies {
 	implementation 'io.grpc:grpc-protobuf:1.63.0'
 	implementation 'io.grpc:grpc-stub:1.63.0'
 	compileOnly 'org.apache.tomcat:annotations-api:6.0.53' // necessary for Java 9+
+
+	// grpc-spring module (server + client)
+	implementation 'net.devh:grpc-spring-boot-starter:3.1.0.RELEASE'
 }
 
 tasks.named('test') {
