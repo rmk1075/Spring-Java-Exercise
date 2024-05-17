@@ -38,16 +38,28 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
+// protobuf configuration
 protobuf {
+	// configure the protoc executable
   protoc {
+		// download from repositories
     artifact = "com.google.protobuf:protoc:3.25.1"
   }
+
+	// configure codegen plugins
   plugins {
+		// Locate a plugin with name 'grpc'. This step is optional.
+    // If you leave it empty, it uses the current directory.
+    // If you don't specify it, protoc will try to use "protoc-gen-grpc" from
+    // system search path.
     grpc {
       artifact = 'io.grpc:protoc-gen-grpc-java:1.63.0'
     }
   }
+
+	// configure the tasks to apply the plugins
   generateProtoTasks {
+		// all() returns the collection of all protoc tasks
     all()*.plugins {
       grpc {}
     }

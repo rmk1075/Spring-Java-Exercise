@@ -106,7 +106,7 @@ public class GrpcClient {
 
   private void callClientSideStreaming(int startId, int endId) throws InterruptedException {
     System.out.println(
-      "Call cliend side streaming. startId=" + startId + " endId=" + endId
+      "Call client side streaming. startId=" + startId + " endId=" + endId
     );
     validateIdRange(startId, endId);
     final CountDownLatch finishLatch = new CountDownLatch(1);
