@@ -1,10 +1,10 @@
-package com.exercise.springjava.lambda;
+package io.practice.lambda;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Predicate;
 
-public class LambdaExercise {
+public class LambdaPractice {
 
   public List<Long> filterValue(List<Long> numbers, Long value) {
     List<Long> result = new LinkedList<>();

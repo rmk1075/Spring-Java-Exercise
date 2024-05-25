@@ -1,4 +1,6 @@
-package com.exercise.springjava.lambda;
+package io.practice.lambda;
+
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -9,9 +11,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class LambdaExerciseTest {
+public class LambdaPracticeTest {
 
-  private final LambdaExercise lambdaExercise = new LambdaExercise();
+  private final LambdaPractice LambdaPractice = new LambdaPractice();
   private static List<Long> numbers = new LinkedList<>();
   private static Long limit = 100L;
   private Long startTime;
@@ -37,24 +39,24 @@ public class LambdaExerciseTest {
 
   @Test
   void testFilterValue() {
-    lambdaExercise.filterValue(numbers, limit);
+    LambdaPractice.filterValue(numbers, limit);
   }
 
   @Test
   void testFilterValueWithFilterInstance() {
-    lambdaExercise.filterValueWithFilterInstance(
-      numbers, lambdaExercise.new NumberFilter(limit));
+    LambdaPractice.filterValueWithFilterInstance(
+      numbers, LambdaPractice.new NumberFilter(limit));
   }
 
   @Test
   void testFilterValueWithPredicate() {
-    lambdaExercise.filterValueWithPredicate(
+    LambdaPractice.filterValueWithPredicate(
       numbers, number -> number > limit);
   }
 
   @Test
   void testFilterValueWithStream() {
-    lambdaExercise.filterValueWithStream(
+    LambdaPractice.filterValueWithStream(
       numbers, number -> number > limit);
   }
 
@@ -62,7 +64,7 @@ public class LambdaExerciseTest {
   void testPrints() {
     int num1 = 1;
     int num2 = 2;
-    lambdaExercise.prints(num1, num2);
+    LambdaPractice.prints(num1, num2);
 
     System.out.println("--------------------");
 
@@ -70,6 +72,11 @@ public class LambdaExerciseTest {
       System.out.println("a: " + a + ", b: " + b);
     };
     func.apply(num1, num2);
+  }
+
+  @Test
+  void testlambdaAccessLocalVariable() {
+    assertDoesNotThrow(() -> LambdaPractice.lambdaAccessLocalVariable());
   }
 }
 
