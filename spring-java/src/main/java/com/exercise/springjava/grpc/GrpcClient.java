@@ -50,53 +50,47 @@ public class GrpcClient {
 
     try {
       GrpcClient client = new GrpcClient(host, port);
-      int id = 1;
 
       // unary
-      client.callUnary(id);
-      id++;
+      client.callUnary(1, 2);
 
       // server streaming
-      client.callServerSideStreaming(id);
-      id++;
+      client.callServerSideStreaming(1, 2);
 
       // client streaming
-      client.callClientSideStreaming(id, id + 99);
-      id += 100;
+      client.callClientSideStreaming(10);
 
       // bidirectional streaming
-      client.callBidirectionalStreaming(id, id + 100);
+      client.callBidirectionalStreaming(10);
     } finally {
       // close channel?
     }
   }
 
-  private void callUnary(int id) {
-    System.out.println("Call unary. id=" + id);
-    DemoRequest request = generateDemoRequest(id);
+  private void callUnary(int a, int b) {
+    DemoRequest request = generateDemoRequest(a, b);
     try {
       DemoResponse response = syncStub.unary(request);
-      assert response.getId() == String.valueOf(id);
+      System.out.println("**** unary ****");
+      System.out.println("a + b = " + response.getResult());
     } catch (StatusRuntimeException e) {
       System.out.println("RPC failed: " + e.getStatus());
       return ;
     }
   }
 
-  private DemoRequest generateDemoRequest(int id) {
-    return DemoRequest.newBuilder()
-      .setId(String.valueOf(id))
-      .setTimestamp(String.valueOf(System.currentTimeMillis()))
-      .build();
+  private DemoRequest generateDemoRequest(int a, int b) {
+    return DemoRequest.newBuilder().setA(a).setB(b).build();
   }
 
-  private void callServerSideStreaming(int id) {
-    System.out.println("Call server side streaming. id=" + id);
-    DemoRequest request = generateDemoRequest(id);
+  private void callServerSideStreaming(int a, int b) {
+    DemoRequest request = generateDemoRequest(a, b);
     try {
       Iterator<DemoResponse> responses = syncStub.serverSideStreaming(request);
+      System.out.println("**** server side streaming ****");
+      System.out.println("a = " + a + ", b = " + b);
       while (responses.hasNext()) {
-        System.out.println(responses.next().getId());
+        System.out.println(responses.next().getResult());
       }
     } catch (StatusRuntimeException e) {
       System.out.println("RPC failed: " + e.getStatus());
@@ -104,23 +98,17 @@ public class GrpcClient {
     }
   }
 
-  private void callClientSideStreaming(int startId, int endId) throws InterruptedException {
-    System.out.println(
-      "Call client side streaming. startId=" + startId + " endId=" + endId
-    );
-    validateIdRange(startId, endId);
+  private void callClientSideStreaming(int count) throws InterruptedException {
     final CountDownLatch finishLatch = new CountDownLatch(1);
     StreamObserver<DemoResponse> responseObserver = new StreamObserver<DemoResponse>() {
       @Override
       public void onNext(DemoResponse value) {
-        String id = value.getId();
-        assert endId == Integer.parseInt(id);
-        System.out.println(id);
+        System.out.println(value.getResult());
       }
 
       @Override
       public void onError(Throwable t) {
-        System.out.println("client side streaming is failed. " + t.getMessage());
+        System.out.println(t.getMessage());
         finishLatch.countDown();
       }
 
@@ -134,12 +122,12 @@ public class GrpcClient {
       asyncStub.clientSideSteraming(responseObserver);
     try {
       Random rand = new Random();
-      for (int i = startId; i <= endId; i++) {
-        requestObserver.onNext(generateDemoRequest(i));
-        Thread.sleep(rand.nextInt(100) + 500);
-        if (finishLatch.getCount() == 0) {
-          return ;
-        }
+      System.out.println("**** client side streaming ****");
+      for (int i = 0; i < count; i++) {
+        int a = rand.nextInt(100);
+        int b = rand.nextInt(100);
+        System.out.println("a = " + a + ", b = " + b);
+        requestObserver.onNext(generateDemoRequest(a, b));
       }
     } catch (RuntimeException e) {
       requestObserver.onError(e);
@@ -150,31 +138,17 @@ public class GrpcClient {
     finishLatch.await(1, TimeUnit.MINUTES);
   }
 
-  private void validateIdRange(int startId, int endId) {
-    if (endId < startId) {
-      throw new IllegalArgumentException(
-        "endId is smaller than startId. startId=" + startId + " endId=" + endId
-      );
-    }
-  }
-
-  private void callBidirectionalStreaming(int startId, int endId) throws InterruptedException {
-    System.out.println(
-      "Call bidirectional streaming. startId=" + startId + " endId=" + endId
-    );
-    validateIdRange(startId, endId);
+  private void callBidirectionalStreaming(int count) throws InterruptedException {
     final CountDownLatch finishLatch = new CountDownLatch(1);
     StreamObserver<DemoResponse> responseObserver = new StreamObserver<DemoResponse>() {
       @Override
       public void onNext(DemoResponse value) {
-        String id = value.getId();
-        assert endId == Integer.parseInt(id);
-        System.out.println(id);
+        System.out.println(value.getResult());
       }
 
       @Override
       public void onError(Throwable t) {
-        System.out.println("client side streaming is failed. " + t.getMessage());
+        System.out.println(t.getMessage());
         finishLatch.countDown();
       }
 
@@ -187,8 +161,13 @@ public class GrpcClient {
     StreamObserver<DemoRequest> requestObserver
       = asyncStub.bidirectionalStreaming(responseObserver);
     try {
-      for (int i = startId; i <= endId; i++) {
-        requestObserver.onNext(generateDemoRequest(i));
+      Random rand = new Random();
+      System.out.println("**** bidirectional streaming ****");
+      for (int i = 0; i < count; i++) {
+        int a = rand.nextInt(100);
+        int b = rand.nextInt(100);
+        System.out.println("a = " + a + ", b = " + b);
+        requestObserver.onNext(generateDemoRequest(a, b));
         if (finishLatch.getCount() == 0) {
           return ;
         }

@@ -23,21 +23,19 @@ public class GrpcServer {
       DemoRequest request,
       StreamObserver<DemoResponse> responseObserver
     ) {
+      int a = request.getA();
+      int b = request.getB();
+
       // return the value.
-      responseObserver.onNext(
-        generateDemoResponse(
-          Integer.parseInt(request.getId())
-        )
-      );
+      responseObserver.onNext(generateDemoResponse(a + b));
 
       // specify that we finished dealing with the RPC
       responseObserver.onCompleted();
     }
 
-    private DemoResponse generateDemoResponse(int id) {
+    private DemoResponse generateDemoResponse(int result) {
       return DemoResponse.newBuilder()
-        .setId(String.valueOf(id))
-        .setTimestamp(String.valueOf(System.currentTimeMillis()))
+        .setResult(result)
         .build();
     }
 
@@ -46,9 +44,12 @@ public class GrpcServer {
       DemoRequest request,
       StreamObserver<DemoResponse> responseObserver
     ) {
-      int id = Integer.parseInt(request.getId());
-      for (int i = 0; i < 100; i++) {
-        responseObserver.onNext(generateDemoResponse(id + i));
+      int a = request.getA();
+      int b = request.getB();
+      int result = a + b;
+      for (int i = 0; i < 10; i++) {
+        responseObserver.onNext(generateDemoResponse(result));
+        result += a + b;
       }
       responseObserver.onCompleted();
     }
@@ -58,27 +59,26 @@ public class GrpcServer {
       StreamObserver<DemoResponse> responseOberver
     ) {
       return new StreamObserver<DemoRequest>() {
+        int sum = 0;
         int count = 0;
-        int maxId = -1;
 
         @Override
         public void onNext(DemoRequest value) {
-          String id = value.getId();
-          System.out.println(
-            "request id=" + id + " timestamp=" + value.getTimestamp());
-          this.maxId = Math.max(this.maxId, Integer.parseInt(id));
+          int a = value.getA();
+          int b = value.getB();
+          this.sum += a + b;
           this.count++;
         }
 
         @Override
         public void onError(Throwable t) {
-          throw new UnsupportedOperationException("Unimplemented method 'onError'");
+          System.out.println(t.getMessage());
         }
 
         @Override
         public void onCompleted() {
-          System.out.println("count=" + this.count + " maxId=" + this.maxId);
-          responseOberver.onNext(generateDemoResponse(this.maxId));
+          System.out.println("count=" + this.count + " sum=" + this.sum);
+          responseOberver.onNext(generateDemoResponse(sum));
           responseOberver.onCompleted();
         }
       };
@@ -92,10 +92,9 @@ public class GrpcServer {
 
         @Override
         public void onNext(DemoRequest value) {
-          String id = value.getId();
-          System.out.println(
-            "request id=" + id + " timestamp=" + value.getTimestamp());
-          responseObserver.onNext(generateDemoResponse(Integer.parseInt(id)));
+          int a = value.getA();
+          int b = value.getB();
+          responseObserver.onNext(generateDemoResponse(a + b));
         }
 
         @Override
@@ -119,6 +118,13 @@ public class GrpcServer {
     this.port = port;
   }
 
+  public static void main(String[] args) throws IOException, InterruptedException {
+    int port = 50051;
+    GrpcServer server = new GrpcServer(port);
+    server.start();
+    server.blockUntilShutdown();
+  }
+
   public void start() throws IOException {
     this.server.start();
     System.out.println("Server started. Listening on " + this.port);
@@ -131,12 +137,5 @@ public class GrpcServer {
     if (server != null) {
       server.awaitTermination();
     }
-  }
-
-  public static void main(String[] args) throws IOException, InterruptedException {
-    int port = 50051;
-    GrpcServer server = new GrpcServer(port);
-    server.start();
-    server.blockUntilShutdown();
   }
 }

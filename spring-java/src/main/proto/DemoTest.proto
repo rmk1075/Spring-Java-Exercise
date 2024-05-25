@@ -11,11 +11,10 @@ service DemoTest {
 }
 
 message DemoRequest {
-  string id = 1;
-  string timestamp = 2;
+  int32 a = 1;
+  int32 b = 2;
 }
 
 message DemoResponse {
-  string id = 1;
-  string timestamp = 2;
+  int32 result = 1;
 }
