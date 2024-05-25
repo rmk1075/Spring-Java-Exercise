@@ -1,4 +1,4 @@
-package com.exercise.springjava.stream;
+package io.practice.stream;
 
 import java.util.Comparator;
 import java.util.List;
@@ -9,7 +9,7 @@ import java.util.Objects;
 import java.util.TreeMap;
 import java.util.function.Predicate;
 
-public class StreamExercise {
+public class StreamPractice {
 
   public int sum(List<Integer> numbers) {
     return numbers.stream().mapToInt(Integer::intValue).sum();
