@@ -1,4 +1,4 @@
-package io.practice.lambda;
+package ex.practice.lambda;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 

@@ -1,4 +1,4 @@
-package io.practice.lambda;
+package ex.practice.lambda;
 
 import java.util.LinkedList;
 import java.util.List;
