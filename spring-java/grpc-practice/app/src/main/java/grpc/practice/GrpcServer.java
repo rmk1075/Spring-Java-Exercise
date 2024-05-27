@@ -1,9 +1,9 @@
-package com.exercise.springjava.grpc;
+package grpc.practice;
 
 import java.io.IOException;
 
-import com.exercise.springjava.grpc.DemoTestOuterClass.DemoRequest;
-import com.exercise.springjava.grpc.DemoTestOuterClass.DemoResponse;
+import grpc.practice.DemoTestOuterClass.DemoRequest;
+import grpc.practice.DemoTestOuterClass.DemoResponse;
 
 import io.grpc.Server;
 import io.grpc.ServerBuilder;

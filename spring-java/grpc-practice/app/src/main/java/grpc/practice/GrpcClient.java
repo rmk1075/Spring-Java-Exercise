@@ -1,14 +1,14 @@
-package com.exercise.springjava.grpc;
+package grpc.practice;
 
 import java.util.Iterator;
 import java.util.Random;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import com.exercise.springjava.grpc.DemoTestGrpc.DemoTestBlockingStub;
-import com.exercise.springjava.grpc.DemoTestGrpc.DemoTestStub;
-import com.exercise.springjava.grpc.DemoTestOuterClass.DemoRequest;
-import com.exercise.springjava.grpc.DemoTestOuterClass.DemoResponse;
+import grpc.practice.DemoTestGrpc.DemoTestBlockingStub;
+import grpc.practice.DemoTestGrpc.DemoTestStub;
+import grpc.practice.DemoTestOuterClass.DemoRequest;
+import grpc.practice.DemoTestOuterClass.DemoResponse;
 
 import io.grpc.Channel;
 import io.grpc.ManagedChannelBuilder;
