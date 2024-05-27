@@ -26,3 +26,6 @@ replay_pid*
 # vscode
 .vscode/*
 .DS_Store
+
+# JMeter
+*.jmx
