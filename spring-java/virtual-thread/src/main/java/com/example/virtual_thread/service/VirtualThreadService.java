@@ -1,4 +1,4 @@
-package com.exercise.springjava.virtualThread.service;
+package com.example.virtual_thread.service;
 
 import java.util.List;
 import java.util.stream.IntStream;
@@ -6,7 +6,7 @@ import java.util.stream.IntStream;
 import org.springframework.stereotype.Service;
 
 @Service
-public class VirtualThreadExerciseService {
+public class VirtualThreadService {
   public void printThreadId() {
     System.out.println("current thread: " + Thread.currentThread().threadId());
     Thread.ofVirtual().start(
