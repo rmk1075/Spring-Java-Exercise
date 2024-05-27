@@ -1,4 +1,4 @@
-package com.example.virtual_thread.controller;
+package com.example.spring_virtual_thread.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.virtual_thread.controller.request.ExecutionEmptyRequest;
-import com.example.virtual_thread.controller.response.ExecutionTimeResponse;
-import com.example.virtual_thread.service.VirtualThreadService;
+import com.example.spring_virtual_thread.controller.request.ExecutionEmptyRequest;
+import com.example.spring_virtual_thread.controller.response.ExecutionTimeResponse;
+import com.example.spring_virtual_thread.service.VirtualThreadService;
 
 @RestController
 @RequestMapping("/virtual-thread")

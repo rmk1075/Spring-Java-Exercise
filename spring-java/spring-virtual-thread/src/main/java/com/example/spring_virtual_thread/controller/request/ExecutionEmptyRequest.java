@@ -1,4 +1,4 @@
-package com.example.virtual_thread.controller.request;
+package com.example.spring_virtual_thread.controller.request;
 
 import lombok.Data;
 

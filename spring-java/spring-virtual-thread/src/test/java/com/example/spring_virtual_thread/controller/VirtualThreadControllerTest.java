@@ -1,13 +1,13 @@
-package com.example.virtual_thread.controller;
+package com.example.spring_virtual_thread.controller;
 
 import java.util.List;
 import java.util.stream.IntStream;
 
 import org.junit.jupiter.api.Test;
 
-import com.example.virtual_thread.controller.request.ExecutionEmptyRequest;
-import com.example.virtual_thread.controller.response.ExecutionTimeResponse;
-import com.example.virtual_thread.service.VirtualThreadService;
+import com.example.spring_virtual_thread.controller.request.ExecutionEmptyRequest;
+import com.example.spring_virtual_thread.controller.response.ExecutionTimeResponse;
+import com.example.spring_virtual_thread.service.VirtualThreadService;
 
 public class VirtualThreadControllerTest {
   private final VirtualThreadController vtController = new VirtualThreadController(

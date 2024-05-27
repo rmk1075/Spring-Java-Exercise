@@ -1,4 +1,4 @@
-package com.example.virtual_thread.service;
+package com.example.spring_virtual_thread.service;
 
 import java.util.List;
 import java.util.stream.IntStream;

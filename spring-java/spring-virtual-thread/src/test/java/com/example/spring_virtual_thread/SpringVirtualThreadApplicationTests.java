@@ -1,10 +1,10 @@
-package com.example.virtual_thread;
+package com.example.spring_virtual_thread;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class VirtualThreadApplicationTests {
+class SpringVirtualThreadApplicationTests {
 
 	@Test
 	void contextLoads() {
