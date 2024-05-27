@@ -1,0 +1,65 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.3.0'
+	id 'io.spring.dependency-management' version '1.1.5'
+
+	id 'com.google.protobuf' version '0.9.4'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	sourceCompatibility = '21'
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	// grpc modules
+	runtimeOnly 'io.grpc:grpc-netty-shaded:1.63.0'
+	implementation 'io.grpc:grpc-protobuf:1.63.0'
+	implementation 'io.grpc:grpc-stub:1.63.0'
+	compileOnly 'org.apache.tomcat:annotations-api:6.0.53' // necessary for Java 9+
+
+	// grpc-spring module (server + client)
+	implementation 'net.devh:grpc-spring-boot-starter:3.1.0.RELEASE'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+// protobuf configuration
+protobuf {
+	// configure the protoc executable
+  protoc {
+		// download from repositories
+    artifact = "com.google.protobuf:protoc:3.25.1"
+  }
+
+	// configure codegen plugins
+  plugins {
+		// Locate a plugin with name 'grpc'. This step is optional.
+    // If you leave it empty, it uses the current directory.
+    // If you don't specify it, protoc will try to use "protoc-gen-grpc" from
+    // system search path.
+    grpc {
+      artifact = 'io.grpc:protoc-gen-grpc-java:1.63.0'
+    }
+  }
+
+	// configure the tasks to apply the plugins
+  generateProtoTasks {
+		// all() returns the collection of all protoc tasks
+    all()*.plugins {
+      grpc {}
+    }
+  }
+}
